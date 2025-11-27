@@ -1,0 +1,1313 @@
+  body {
+    background: url("bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden; /* prevent horizontal scrollbar */
+  }
+
+
+  .background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(180, 180, 180, 0.623);
+    z-index: -1;
+  }
+
+
+  /*  Navbar */
+  nav.navbar {
+    background-color: rgba(10, 46, 92, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+
+  .navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+
+  .navbar .img-fluid {
+    transition: transform 0.2s ease;
+  }
+
+
+  .navbar .img-fluid:hover {
+    transform: scale(1.05);
+  }
+
+
+  .e-voting-text {
+   
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 70px;
+}
+
+
+
+
+  /* --- Profile dropdown --- */
+  .profile-img {
+    border: 2px solid #fff;
+    transition: transform 0.3s ease;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+  .profile-img:hover {
+    transform: scale(1.1);
+  }
+
+
+.monogram-avatar{
+  background:#fff;
+  color:#0a2e5c;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+ 
+  user-select:none;
+}
+
+
+
+
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+  .bi-caret-down-fill {
+    font-size: 0.8rem;
+    margin-left: 4px;
+  }
+  .dropdown-menu {
+    border-radius: 10px;
+    padding: 5px 0;
+  }
+  .dropdown-item:hover {
+    background-color: #0a2e5c;
+    color: white;
+  }
+  .logout-item {
+    color: #dc3545 !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 5px 0;
+    border-radius: 7px;
+    text-align: center;
+    width: 120px;
+    margin: 0 auto;
+    display: block;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .logout-item:hover {
+    background-color: #dc3545;
+    color: #fff !important;
+  }
+
+
+  /* --- Title --- */
+  .title-box {
+    display: inline-block;
+    color: #16164e;
+    padding: 3px 12px;
+    border-left: 6px solid #0a2e5c;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 100px;
+    margin-left: 40px;
+  }
+
+
+  /* --- Candidate Layout --- */
+  .candidate-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    overflow: visible !important;
+  }
+
+
+  .candidate-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 850px;
+    overflow: visible !important;
+  
+   /* Animation properties */
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+  
+  /* Slide in from right for next candidate */
+.candidate-card.slide-in-next {
+  animation: slideInFromRight 0.5s ease forwards;
+}
+
+/* Slide in from left for previous candidate */
+.candidate-card.slide-in-prev {
+  animation: slideInFromLeft 0.5s ease forwards;
+}
+
+/* Slide out to left for current candidate (next navigation) */
+.candidate-card.slide-out-next {
+  animation: slideOutToLeft 0.5s ease forwards;
+}
+
+/* Slide out to right for current candidate (previous navigation) */
+.candidate-card.slide-out-prev {
+  animation: slideOutToRight 0.5s ease forwards;
+}
+/* Animation Keyframes */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+.nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+  .candidate-role {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #34769e;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+
+
+  .role-divider {
+    width: 85%;
+    margin: 0 auto 20px auto;
+    border: 1.5px solid #0a2e5c;
+    opacity: 0.8;
+  }
+
+
+  .candidate-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    position: relative;
+    padding-left: 40px;
+  }
+
+
+  .candidate-photo {
+    width: 185px;
+    height: 230px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 3px solid #0a2e5c;
+    margin-right: 15px;
+    margin-left: 25px;
+  }
+
+
+  .candidate-details {
+    margin-left: 58px;
+  }
+
+
+  .info-text p {
+    margin: 3px 0;
+    font-size: 15px;
+    margin-left: -50px;
+  }
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: -220px;
+  }
+  .info-text p strong {
+    font-size: 1.1rem;
+    color: #0a2e5c;
+    font-weight: 700;
+  }
+
+
+  /* --- Platforms / Credentials Tabs --- */
+  .info-box {
+  background: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 15px;
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 180px;              
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;          
+}
+
+
+
+
+  .tab-header {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+
+.tab-btn {
+  background: #90c4fb;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-weight: 600;
+  color: #100e0e;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+  /* Hover effect for inactive buttons */
+.tab-btn:hover {
+  background: #7ab3f9; /* Slightly darker blue */
+  color: #000;
+  transform: translateY(-3px); /* Lift effect */
+  box-shadow: 0 4px 12px rgba(122, 179, 249, 0.4);
+}
+
+
+  /* Active button style */
+.tab-btn.active {
+  background: linear-gradient(135deg, #4171ab, #345d8c);
+  color: white;
+  box-shadow: 0 2px 8px rgba(65, 113, 171, 0.3);
+}
+
+/* Hover effect for active button */
+.tab-btn.active:hover {
+  background: linear-gradient(135deg, #3a6599, #2d4f75);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(65, 113, 171, 0.5);
+}
+
+
+.tab-btn:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  animation: borderPulse 1.5s infinite;
+}
+
+
+  /* Inner content scrolls when text is long */
+.tab-content {
+  flex: 1;
+  border-top: 1px solid #9e8585;
+  padding-top: 10px;
+  max-height: 120px;          
+  overflow-y: auto;          
+  overflow-x: hidden;
+  scrollbar-color: #888 transparent;
+  padding-right: 5px;
+}
+
+/* NEW: Hide scrollbar when content fits */
+.tab-content.no-scroll {
+  overflow-y: hidden !important;
+}
+
+/* Scrollbar styling (for Chrome/Edge/Safari) */
+.tab-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+  .tab-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+
+  .tab-content::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+
+
+  .tab-content::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+
+  .tab-pane {
+    display: none;
+    font-size: 14px;
+  }
+
+
+  .tab-pane.show {
+    display: block;
+  }
+
+
+  /* --- Buttons --- */
+  .add-ballot-btn {
+    background: #0a2e5c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    margin: 15px auto 0;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+    display: block;
+  }
+
+
+  .add-ballot-btn:hover {
+    background: #103b80;
+  }
+
+/* Nav button hover effects */
+.nav-btn {
+  background: #0a2e5c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+
+  .nav-btn.prev { left: 10px; }
+  .nav-btn.next { right: 10px; }
+  
+.nav-btn:hover {
+  background: #103b80;
+  transform: translateY(-50%) scale(1.1);
+}
+
+
+  /* --- Floating Ballot --- */
+  .floating-ballot {
+    position: fixed;
+    top: 150px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #0a2e5c;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 9999;
+  }
+/* Tooltip text */
+.floating-ballot::after {
+  content: "View Ballot";
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0a2e5c;
+  color: white;
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+
+
+
+  .floating-ballot:hover::after { opacity: 1; }
+
+
+  .floating-ballot i {
+    font-size: 30px;
+    color: #0a2e5c;
+  }
+
+
+/* Center image inside Floating Ballot button */
+.floating-ballot img {
+  width: 70%;
+  height: 70%;
+  display: block;
+  margin: auto;
+  object-fit: contain;
+}
+    /* Added styles for the floating window */
+    .modal-content {
+   
+  background-color: #dceeff; /* soft light blue */
+  backdrop-filter: blur(8px); /* soft blur effect */
+  border: 1.10px solid #020d1b;
+  border: none;
+}
+.candidate-box {
+  border: 2px solid #000000;
+  border-radius: 35px;
+  padding: 15px;
+  background-color: #f7faff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 87%;
+  margin: 0 auto 30px auto;
+  position: relative;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: left;
+  transition: all 0.3s ease;
+  word-wrap: break-word;
+}
+
+
+
+.candidate-box .candidate-info {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+
+.candidate-box .ballot-details {
+  display: block; 
+  flex: 1;
+}
+
+
+.candidate-box .ballot-details h4 {
+  color: #0a2e5c;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+
+.candidate-box .ballot-details p {
+  display: block;
+  margin: 8px 0;
+  line-height: 1.4;
+  font-size: 14px;
+  clear: both;
+  width: 100%;
+}
+
+
+.candidate-box .ballot-details p strong {
+  color: #0a2e5c;
+  font-weight: 700;
+  display: inline-block;
+  min-width: 80px;
+}
+
+
+
+.candidate-box .row {
+  display: block !important; 
+}
+
+
+.candidate-box .col {
+  display: block !important;
+  width: 100% !important;
+}
+
+
+.candidate-box .col p {
+  display: block;
+  margin: 8px 0;
+}
+
+
+.candidate-photo {
+  width: 185px;
+  height: 260px;
+  border-radius: 10px;
+  border: 3px solid #0a2e5c;
+  object-fit: cover;
+  flex-shrink: 0; /*  prevent image from shrinking */
+}
+
+
+.candidate-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+
+/* Text container beside photo */
+.candidate-details {
+  flex: 1;
+  min-width: 220px;
+  word-break: break-word; 
+}
+
+
+.candidate-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  color: #000;
+  line-height: 1.3;
+}
+
+.remove-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.remove-btn:hover {
+  background-color: #b02a37;
+  transform: scale(1.1);
+}
+
+.remove-btn.removing {
+  transform: scale(0.8);
+  opacity: 0.5;
+  background-color: #ff6b7a;
+}
+
+.candidate-box.removing {
+  animation: slideOut 0.4s ease forwards;
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+
+/* Particle effect for removal */
+.removal-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #dc3545;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+}
+.flying-image {
+    position: fixed !important;
+    z-index: 9999 !important;
+    border-radius: 10px !important;
+    object-fit: cover !important;
+    pointer-events: none !important;
+    box-shadow: 0 4px 15px rgba(10, 46, 92, 0.5) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+
+
+/*  Responsive behavior for smaller screens */
+@media (max-width: 900px) {
+  .candidate-box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 95%;
+  }
+
+
+  .candidate-photo {
+    margin: 0 auto 10px auto;
+  }
+
+
+  .candidate-details {
+    text-align: center;
+  }
+
+
+  .remove-btn {
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+
+
+
+     .submit-btn {
+      display: block;
+      margin: 20px auto 0;
+      border-radius: 20px;
+      padding: 10px 30px;
+    }
+.candidate-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+
+/* Style for the Unvoted Modal */
+.unvotedModal .modal-content {
+  background: #f9fbff;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border: 1px solid #cfe2ff;
+   padding: 1rem 1.5rem;
+  font-size: 15px;
+}
+.unvotedModal .modal-body p {
+  margin-bottom: 0.5rem;
+}
+
+
+
+
+.unvotedModal .modal-content:hover {
+  transform: scale(1.02);
+}
+
+
+.unvotedModal .modal-header {
+  background: #0756cc;
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+.unvotedModal .modal-body {
+  font-size: 16px;
+  color: #333;
+}
+
+
+.unvotedModal .modal-body ul {
+  margin-top: 40px;
+}
+
+
+.unvotedModal .btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+
+
+.unvotedModal .btn-secondary {
+  background-color: #6c757d;
+  border: none;
+}
+.confirmVoteModal .modal-content {
+  background: #f8faff;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  border: 2px solid #007bff20;
+}
+
+
+.confirmVoteModal .btn-success {
+  background-color: #1da13b;
+  border: none;
+  font-weight: 600;
+}
+
+
+.confirmVoteModal .btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  font-weight: 600;
+}
+.navbar {
+  max-height: 80px;
+}
+
+
+
+.custom-alert {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: #e3e7e2;
+  color: #000;
+  padding: 14px 22px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(79, 250, 40, 0.712);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: -1;
+}
+
+
+.custom-alert.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  z-index: 1055; 
+}
+
+
+.custom-alert.danger {
+    background-color: #dc3545;   /* bootstrap “danger” red */
+    box-shadow: 0 4px 12px rgba(255, 51, 51, 0.712) !important;
+    color: #fff;
+}
+
+
+
+
+/*  Background overlay */
+.logout-modal {
+  display: none; 
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+
+/*  Modal box */
+.logout-modal-content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+
+/*  Buttons */
+.logout-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+
+.cancel-btn,
+.confirm-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+
+.cancel-btn {
+  background: #ddd;
+  color: #333;
+}
+
+
+.cancel-btn:hover {
+  background: #ccc;
+}
+
+
+.confirm-btn {
+  background: #c0392b; 
+  color: white;
+}
+
+
+.confirm-btn:hover {
+  background: #a93226;
+}
+/*  Universal Responsive Close Button */
+.close-btn {
+  position: fixed;             /* stays clickable no matter the layout */
+  top: 15px;
+  right: 15px;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 50%;
+  color: #222;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;              /* ensure it's always on top */
+  transition: all 0.25s ease;
+  pointer-events: auto;        /* make sure clicks always register */
+}
+
+
+.close-btn:hover {
+  background: rgba(10, 46, 92, 0.85);
+  color: white;
+  transform: scale(1.08);
+}
+/*  Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+/*  Mobile-friendly adjustment */
+@media (max-width: 1200px) {
+  .candidate-card {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+
+@media (max-width: 992px) {
+  .candidate-info {
+    flex-direction: column;
+    align-items: center;
+    padding-left: 0;
+  }
+
+
+  .candidate-photo {
+    margin: 0 auto 15px auto;
+    width: 160px;
+    height: 200px;
+  }
+
+
+  .candidate-details {
+    margin-left: 0;
+    text-align: center;
+  }
+
+
+  .info-box {
+    width: 100%;
+    height: auto;
+  }
+
+
+  .tab-content {
+    max-height: 150px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .candidate-box {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+
+  .info-box {
+    width: 100%;
+    max-width: 400px;
+    height: 180px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .candidate-card {
+    width: 95%;
+    padding: 15px;
+  }
+
+
+  .candidate-photo {
+    width: 140px;
+    height: 180px;
+  }
+
+
+  .candidate-role {
+    font-size: 1.3rem;
+  }
+
+
+  .info-box {
+    width: 100%;
+    padding: 10px;
+  }
+
+
+  .tab-btn {
+    padding: 5px 12px;
+    font-size: 0.9rem;
+  }
+
+
+  .tab-content {
+    font-size: 13px;
+  }
+}
+@media (max-width: 576px) {
+  .close-btn {
+    top: 8px;
+    right: 10px;
+    width: 40px;            /* smaller but still easy to tap */
+    height: 40px;
+    font-size: 24px;
+  }
+}
+/*  Adjust on smaller screens (still big enough to tap) */
+@media (max-width: 768px) {
+  .close-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+    top: 10px;
+    right: 12px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .close-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+    top: 8px;
+    right: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   MOBILE-FIRST OVERRIDES (≤ 480 px)
+   Append to the bottom of dashboard.css
+========================================================= */
+
+@media (max-width: 480px) {
+    /* ---------- GLOBAL RESETS ---------- */
+    html, body {
+        overflow-x: hidden;               /* kill horizontal scroll */
+        font-size: 14px;                  /* slightly smaller base */
+    }
+
+    /* ---------- NAVBAR ---------- */
+    nav.navbar {
+        padding: .35rem 0;
+        max-height: 60px;
+    }
+    .navbar .img-fluid {
+        width: 45px !important;           /* shrink logos */
+    }
+    .e-voting-text {
+        font-size: 1.05rem;
+        letter-spacing: 0;
+    }
+    .profile-img {
+        width: 32px;
+        height: 32px;
+        font-size: .9rem;
+    }
+
+    /* ---------- PAGE TITLE ---------- */
+    .title-box {
+        font-size: 1.2rem;
+        margin: 70px 0 15px 15px;
+        padding: 2px 8px;
+        border-left-width: 4px;
+    }
+
+    /* ---------- CANDIDATE CARD ---------- */
+    .candidate-card {
+        width: 98vw;
+        padding: 12px;
+        border-radius: 10px;
+    }
+    .candidate-role {
+        font-size: 1.15rem;
+        margin-bottom: 4px;
+    }
+    .role-divider {
+        width: 90%;
+        margin: 0 auto 10px auto;
+    }
+
+    /* photo + details stack */
+    .candidate-info {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+        gap: 12px;
+    }
+    .candidate-photo {
+        width: 140px;
+        height: 170px;
+        margin: 0 auto;
+    }
+    .candidate-details {
+        margin-left: 0;
+        text-align: center;
+        width: 100%;
+    }
+    .right-col {
+        margin-right: 0;
+        align-items: center;
+    }
+
+    /* info-box becomes full-width card */
+    .info-box {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 140px;
+        padding: 10px;
+    }
+    .tab-btn {
+        padding: 5px 10px;
+        font-size: .8rem;
+    }
+    .tab-content {
+        max-height: 110px;
+        font-size: 13px;
+    }
+
+    /* nav buttons easier to tap */
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .nav-btn.prev { left: 5px; }
+    .nav-btn.next { right: 5px; }
+
+    /* ---------- FLOATING BALLOT ---------- */
+    .floating-ballot {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        top: auto;
+        bottom: 20px;
+        right: 15px;
+    }
+    .floating-ballot::after {
+        bottom: -28px;
+        font-size: 11px;
+        padding: 2px 5px;
+    }
+
+    /* ---------- BALLOT MODAL ---------- */
+    .candidate-box {
+        width: 95%;
+        flex-direction: column;
+        text-align: center;
+        padding: 12px;
+    }
+    .candidate-box .candidate-info {
+        flex-direction: column;
+    }
+    .candidate-photo {
+        width: 120px;
+        height: 150px;
+        margin: 0 auto 10px auto;
+    }
+    .remove-btn {
+        position: static;
+        margin: 10px auto 0 auto;
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    /* close button still big enough */
+    .close-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        top: 8px;
+        right: 8px;
+    }
+
+    /* ---------- ALERT / TOAST ---------- */
+    .custom-alert {
+        top: 10px;
+        right: 10px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+    }
+
+    /* ---------- LOGOUT MODAL ---------- */
+    .logout-modal-content {
+        padding: 20px;
+        max-width: 90%;
+    }
+    .logout-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .cancel-btn,
+    .confirm-btn {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================
+   PHONE-SPILL FIXES (≤ 480 px)
+========================================== */
+@media (max-width: 480px) {
+
+  /* 1. nav logos – keep them fully inside the bar */
+  nav.navbar {
+    padding-top: 0px !important;
+    padding-bottom: 8px !important;
+    max-height: 66px !important;
+  }
+  .navbar .img-fluid {
+    width: 42px !important;
+    height: auto !important;
+    max-height: 42px !important;   /* lock aspect ratio */
+  }
+
+  /* 2. candidate card – stop “Name:” creeping off-screen */
+  .candidate-details {
+    margin-left: 24px !important;
+    padding-left: 16px !important;   /* tiny buffer */
+    word-break: break-word !important;
+  }
+  .candidate-details p strong {
+    margin-right: -2px !important;
+    min-width: auto !important;
+  }
+}

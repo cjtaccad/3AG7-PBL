@@ -1,0 +1,395 @@
+
+CREATE DATABASE evoting_system;
+USE evoting_system;
+
+-- Colleges Table
+CREATE TABLE Colleges (
+    college_id INT AUTO_INCREMENT PRIMARY KEY,
+    college_name VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Courses Table
+CREATE TABLE Courses (
+    course_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(150) UNIQUE NOT NULL,
+    college_id INT NOT NULL,
+    FOREIGN KEY (college_id) REFERENCES Colleges(college_id)
+);
+
+-- Users Table (supertype for Students and Admins)
+CREATE TABLE Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    middle_name VARCHAR(50),
+    last_name VARCHAR(50) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    qr_code TEXT,
+    role ENUM('STUDENT', 'ADMIN') NOT NULL,
+    full_name VARCHAR(155) GENERATED ALWAYS AS 
+        (CONCAT_WS(' ', first_name, middle_name, last_name)) STORED
+);
+
+-- Students Table (subtype of Users)
+CREATE TABLE Students (
+    user_id INT PRIMARY KEY,
+    course_id INT NOT NULL,
+    year_level INT NOT NULL,
+    is_enrolled BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+-- Admins Table (subtype of Users)
+CREATE TABLE Admins (
+    user_id INT PRIMARY KEY,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+-- Positions Table
+CREATE TABLE Positions (
+    position_id INT AUTO_INCREMENT PRIMARY KEY,
+    position_name VARCHAR(100) UNIQUE NOT NULL
+);
+
+-- Candidates Table
+CREATE TABLE Candidates (
+    candidate_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    position_id INT NOT NULL,
+    goals TEXT,
+    profile_picture VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES Students(user_id),
+    FOREIGN KEY (position_id) REFERENCES Positions(position_id)
+);
+
+-- Ballots Table 
+CREATE TABLE Ballots (
+    ballot_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL UNIQUE,
+    FOREIGN KEY (user_id) REFERENCES Students(user_id)
+);
+
+-- Votes Table
+CREATE TABLE Votes (
+    vote_id INT AUTO_INCREMENT PRIMARY KEY,
+    ballot_id INT NOT NULL,
+    candidate_id INT NOT NULL,
+    vote_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ballot_id) REFERENCES Ballots(ballot_id),
+    FOREIGN KEY (candidate_id) REFERENCES Candidates(candidate_id),
+    CONSTRAINT uq_vote UNIQUE (ballot_id, candidate_id)
+);
+
+-- Schedule Table
+CREATE TABLE Schedule (
+    schedule_id INT AUTO_INCREMENT PRIMARY KEY,
+    phase ENUM('VIEW_CANDIDATES', 'VOTING') NOT NULL,
+    start_datetime DATETIME NOT NULL,
+    end_datetime DATETIME NOT NULL
+);
+
+-- Announcements Table
+CREATE TABLE Announcements (
+    announcement_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    message TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_by INT NOT NULL,
+    FOREIGN KEY (created_by) REFERENCES Admins(user_id)
+);
+
+-- AnnouncementFiles Table
+CREATE TABLE AnnouncementFiles (
+    file_id INT AUTO_INCREMENT PRIMARY KEY,
+    announcement_id INT NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (announcement_id) REFERENCES Announcements(announcement_id)
+);
+
+-- AuditLogs Table
+CREATE TABLE AuditLogs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    action VARCHAR(200) NOT NULL,
+    log_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+
+
+
+
+UPDATE OCTOBER 23, 2025:
+USE evoting_system;
+
+ALTER TABLE Colleges
+ADD COLUMN logo_path VARCHAR(255) AFTER college_name;
+
+ALTER TABLE Candidates
+CHANGE COLUMN goals platforms TEXT;
+
+-- Add new 'credentials' column
+ALTER TABLE Candidates
+ADD COLUMN credentials TEXT AFTER platforms;
+
+UPDATE OCTOBER 27, 2025
+CREATE TABLE AdminNotes (
+    note_id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_user_id INT NOT NULL,
+    note_text TEXT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_user_id) REFERENCES Admins(user_id)
+);
+
+
+
+
+
+
+
+
+
+
+INSERT NYO SA MGA TABLES
+
+-- Insert Colleges
+INSERT INTO Colleges (college_name) VALUES
+('Institute of Arts and Design'),
+('College of Computing and Information Sciences'),
+('College of Business and Financial Sciences'),
+('Institute of Accountancy'),
+('College of Human Kinetics'),
+('College of Governance and Public Policy'),
+('Institute of Nursing'),
+('College of Tourism and Hospitality Management');
+
+-- Insert Courses
+INSERT INTO Courses (course_name, college_id) VALUES
+-- Institute of Arts and Design
+('Bachelor in Multimedia Arts', 1),
+('Associate in Customer Service Communication', 1),
+
+-- College of Computing and Information Sciences
+('Bachelor of Science in Computer Science (Application Development Elective Track)', 2),
+('Bachelor of Science in Information Technology (Information and Network Security Elective Track)', 2),
+('Diploma in Application Development', 2),
+('Diploma in Computer Network Administration', 2),
+
+-- College of Business and Financial Sciences
+('Bachelor of Science in Entrepreneurial Management', 3),
+('Bachelor of Science in Business Administration Major in Marketing Management', 3),
+('Bachelor of Science in Office Administration', 3),
+('Bachelor of Science in Financial Management', 3),
+('Associate in Building and Property Management', 3),
+('Associate in Supply Management', 3),
+
+-- Institute of Accountancy
+('Bachelor of Science in Accountancy', 4),
+('Bachelor of Science in Management Accounting', 4),
+
+-- College of Human Kinetics
+('Bachelor of Science in Exercise and Sports Science major in Fitness and Sports Management', 5),
+
+-- College of Governance and Public Policy
+('Bachelor of Arts in Political Science major in Paralegal Studies', 6),
+('Bachelor of Arts in Political Science major in Policy Management', 6),
+('Bachelor of Arts in Political Science major in Local Government Administration', 6),
+
+-- Institute of Nursing
+('Master of Arts in Nursing', 7),
+('Bachelor of Science in Nursing', 7),
+
+-- College of Tourism and Hospitality Management
+('Bachelor of Science in Hospitality Management', 8),
+('Bachelor of Science in Tourism Management', 8),
+('Associate in Hospitality Management', 8);
+
+
+
+
+3. Users and Students Table (STUDENTS)
+USE evoting_system;
+
+START TRANSACTION;
+
+-- -------------------------------------------------------
+-- Insert 50 test students into Users (explicit IDs 1001-1050)
+-- Passwords are stored as SHA2(...,256). Plaintext mapping
+-- is provided below for testing.
+-- -------------------------------------------------------
+
+INSERT INTO Users (user_id, email, first_name, middle_name, last_name, password_hash, qr_code, role)
+VALUES
+(1001, 'juan.delacruz@umak.edu.ph', 'Juan', 'S', 'Delacruz', SHA2('Jdela@2025',256), 'QR|1001|ENROLLED', 'STUDENT'),
+(1002, 'maria.reyes@umak.edu.ph', 'Maria', 'C', 'Reyes', SHA2('Mreyes!321',256), 'QR|1002|ENROLLED', 'STUDENT'),
+(1003, 'juanito.santos@umak.edu.ph', 'Juanito', 'R', 'Santos', SHA2('Jsantos#90',256), 'QR|1003|ENROLLED', 'STUDENT'),
+(1004, 'angelica.delao@umak.edu.ph', 'Angelica', 'M', 'Delao', SHA2('Adelao_77',256), 'QR|1004|ENROLLED', 'STUDENT'),
+(1005, 'mark.rosales@umak.edu.ph', 'Mark', 'A', 'Rosales', SHA2('Mrosales09',256), 'QR|1005|ENROLLED', 'STUDENT'),
+(1006, 'nicole.mendoza@umak.edu.ph', 'Nicole', 'L', 'Mendoza', SHA2('Nmend0za!',256), 'QR|1006|ENROLLED', 'STUDENT'),
+(1007, 'daniel.garcia@umak.edu.ph', 'Daniel', 'P', 'Garcia', SHA2('Dgarcia2025',256), 'QR|1007|ENROLLED', 'STUDENT'),
+(1008, 'karen.bautista@umak.edu.ph', 'Karen', 'R', 'Bautista', SHA2('Kbaut1sta',256), 'QR|1008|ENROLLED', 'STUDENT'),
+(1009, 'raph.delosreyes@umak.edu.ph', 'Raphael', 'V', 'Delosreyes', SHA2('Rdelos2025',256), 'QR|1009|ENROLLED', 'STUDENT'),
+(1010, 'erika.soriano@umak.edu.ph', 'Erika', 'B', 'Soriano', SHA2('Esoriano#1',256), 'QR|1010|ENROLLED', 'STUDENT'),
+
+(1011, 'michael.tan@umak.edu.ph', 'Michael', 'C', 'Tan', SHA2('MtanPass55',256), 'QR|1011|ENROLLED', 'STUDENT'),
+(1012, 'jasmine.perez@umak.edu.ph', 'Jasmine', 'L', 'Perez', SHA2('Jperez!2025',256), 'QR|1012|ENROLLED', 'STUDENT'),
+(1013, 'rico.bautista@umak.edu.ph', 'Rico', 'D', 'Bautista', SHA2('Rbautista99',256), 'QR|1013|ENROLLED', 'STUDENT'),
+(1014, 'alvin.cortes@umak.edu.ph', 'Alvin', 'J', 'Cortes', SHA2('Acortes#88',256), 'QR|1014|ENROLLED', 'STUDENT'),
+(1015, 'chelle.santiago@umak.edu.ph', 'Chelle', 'E', 'Santiago', SHA2('Csantiago_1',256), 'QR|1015|ENROLLED', 'STUDENT'),
+(1016, 'patrick.ong@umak.edu.ph', 'Patrick', 'M', 'Ong', SHA2('Pong2025*',256), 'QR|1016|ENROLLED', 'STUDENT'),
+(1017, 'nicco.gonzales@umak.edu.ph', 'Nicco', 'A', 'Gonzales', SHA2('Ngonz123',256), 'QR|1017|ENROLLED', 'STUDENT'),
+(1018, 'leah.villanueva@umak.edu.ph', 'Leah', 'F', 'Villanueva', SHA2('LvillanuevA',256), 'QR|1018|ENROLLED', 'STUDENT'),
+(1019, 'kevin.martinez@umak.edu.ph', 'Kevin', 'S', 'Martinez', SHA2('Kmart!nez',256), 'QR|1019|ENROLLED', 'STUDENT'),
+(1020, 'anne.morales@umak.edu.ph', 'Anne', 'R', 'Morales', SHA2('Amorales00',256), 'QR|1020|UNENROLLED', 'STUDENT'),
+
+(1021, 'rico.santos@umak.edu.ph', 'Rico', 'L', 'Santos', SHA2('Rsant0s!',256), 'QR|1021|ENROLLED', 'STUDENT'),
+(1022, 'geraldine.ramos@umak.edu.ph', 'Geraldine', 'T', 'Ramos', SHA2('Gramos2025',256), 'QR|1022|ENROLLED', 'STUDENT'),
+(1023, 'joel.alfaro@umak.edu.ph', 'Joel', 'P', 'Alfaro', SHA2('Jalfaro#7',256), 'QR|1023|ENROLLED', 'STUDENT'),
+(1024, 'michelle.cabral@umak.edu.ph', 'Michelle', 'A', 'Cabral', SHA2('Mcabral2025',256), 'QR|1024|ENROLLED', 'STUDENT'),
+(1025, 'bernard.delosangeles@umak.edu.ph', 'Bernard', 'R', 'DelosAngeles', SHA2('Bdelos25',256), 'QR|1025|ENROLLED', 'STUDENT'),
+(1026, 'paulino.dizon@umak.edu.ph', 'Paulino', 'M', 'Dizon', SHA2('Pdizon_321',256), 'QR|1026|ENROLLED', 'STUDENT'),
+(1027, 'kimberly.luna@umak.edu.ph', 'Kimberly', 'Y', 'Luna', SHA2('Kluna$55',256), 'QR|1027|ENROLLED', 'STUDENT'),
+(1028, 'josefina.caballero@umak.edu.ph', 'Josefina', 'N', 'Caballero', SHA2('Jcaballero9',256), 'QR|1028|ENROLLED', 'STUDENT'),
+(1029, 'alfredo.guevarra@umak.edu.ph', 'Alfredo', 'C', 'Guevarra', SHA2('Agueva2025',256), 'QR|1029|ENROLLED', 'STUDENT'),
+(1030, 'charmaine.maliksi@umak.edu.ph', 'Charmaine', 'V', 'Maliksi', SHA2('Cmaliksi#2',256), 'QR|1030|ENROLLED', 'STUDENT'),
+
+(1031, 'marvin.ong@umak.edu.ph', 'Marvin', 'D', 'Ong', SHA2('MongPass88',256), 'QR|1031|ENROLLED', 'STUDENT'),
+(1032, 'shiela.diaz@umak.edu.ph', 'Shiela', 'B', 'Diaz', SHA2('Sdiaz_2025',256), 'QR|1032|ENROLLED', 'STUDENT'),
+(1033, 'raymond.estrada@umak.edu.ph', 'Raymond', 'L', 'Estrada', SHA2('Restrada*11',256), 'QR|1033|ENROLLED', 'STUDENT'),
+(1034, 'carlo.paimanes@umak.edu.ph', 'Carlo', 'H', 'Paimanes', SHA2('Cpaim2025',256), 'QR|1034|ENROLLED', 'STUDENT'),
+(1035, 'isabelle.cabaluna@umak.edu.ph', 'Isabelle', 'M', 'Cabaluna', SHA2('Icabaluna1',256), 'QR|1035|UNENROLLED', 'STUDENT'),
+(1036, 'manny.torres@umak.edu.ph', 'Manny', 'O', 'Torres', SHA2('Mtorres77',256), 'QR|1036|ENROLLED', 'STUDENT'),
+(1037, 'joanna.beltran@umak.edu.ph', 'Joanna', 'R', 'Beltran', SHA2('Jbeltran09',256), 'QR|1037|ENROLLED', 'STUDENT'),
+(1038, 'erwin.pantoja@umak.edu.ph', 'Erwin', 'A', 'Pantoja', SHA2('Epantoja#3',256), 'QR|1038|ENROLLED', 'STUDENT'),
+(1039, 'rhian.lao@umak.edu.ph', 'Rhian', 'S', 'Lao', SHA2('RlaoPass5',256), 'QR|1039|ENROLLED', 'STUDENT'),
+(1040, 'dave.cervantes@umak.edu.ph', 'Dave', 'P', 'Cervantes', SHA2('Dcervant3s',256), 'QR|1040|DROPPED', 'STUDENT'),
+
+(1041, 'mike.baldoza@umak.edu.ph', 'Mike', 'J', 'Baldoza', SHA2('Mbaldoza22',256), 'QR|1041|ENROLLED', 'STUDENT'),
+(1042, 'raissa.padilla@umak.edu.ph', 'Raissa', 'L', 'Padilla', SHA2('Rpadilla_8',256), 'QR|1042|ENROLLED', 'STUDENT'),
+(1043, 'adrian.abalos@umak.edu.ph', 'Adrian', 'V', 'Abalos', SHA2('Aabalos#10',256), 'QR|1043|ENROLLED', 'STUDENT'),
+(1044, 'samantha.tuazon@umak.edu.ph', 'Samantha', 'G', 'Tuazon', SHA2('Stuazon2025',256), 'QR|1044|ENROLLED', 'STUDENT'),
+(1045, 'francis.soriano@umak.edu.ph', 'Francis', 'K', 'Soriano', SHA2('Fsoriano!',256), 'QR|1045|GRADUATED', 'STUDENT'),
+(1046, 'bryan.escobar@umak.edu.ph', 'Bryan', 'M', 'Escobar', SHA2('Bescobar55',256), 'QR|1046|ENROLLED', 'STUDENT'),
+(1047, 'janine.lim@umak.edu.ph', 'Janine', 'A', 'Lim', SHA2('JlimPass09',256), 'QR|1047|ENROLLED', 'STUDENT'),
+(1048, 'quentin.sison@umak.edu.ph', 'Quentin', 'E', 'Sison', SHA2('Qsison_2',256), 'QR|1048|ENROLLED', 'STUDENT'),
+(1049, 'theresa.magsino@umak.edu.ph', 'Theresa', 'N', 'Magsino', SHA2('Tmagsino00',256), 'QR|1049|ENROLLED', 'STUDENT'),
+(1050, 'eduardo.bueno@umak.edu.ph', 'Eduardo', 'R', 'Bueno', SHA2('Ebueno#77',256), 'QR|1050|GRADUATED', 'STUDENT');
+
+-- -------------------------------------------------------
+-- Insert corresponding Students rows.
+-- NOTE: Adjust course_id values if your course IDs differ.
+-- Mapping used (from your earlier inserts):
+--  1..2  = Institute of Arts and Design
+--  3..6  = College of Computing and Information Sciences (CCIS)
+--  7..12 = College of Business and Financial Sciences
+-- 13..14 = Institute of Accountancy
+-- 15    = College of Human Kinetics
+-- 16..18= College of Governance and Public Policy
+-- 19..20= Institute of Nursing
+-- 21..23= College of Tourism and Hospitality Management
+-- -------------------------------------------------------
+
+INSERT INTO Students (user_id, course_id, year_level, is_enrolled)
+VALUES
+-- (1001..1010) : mix of CCIS and others
+(1001, 3, 3, TRUE),  -- CCIS: BSCS (App Dev)
+(1002, 7, 2, TRUE),  -- BS Entrepreneurial Mgmt (CBFS)
+(1003, 4, 2, TRUE),  -- CCIS: BSIT (Inf & Net Sec)
+(1004, 1, 4, TRUE),  -- Multimedia Arts (IAD)
+(1005, 3, 1, TRUE),  -- CCIS
+(1006, 8, 2, TRUE),  -- BSBA Marketing (CBFS)
+(1007, 3, 4, TRUE),  -- CCIS
+(1008, 21, 1, TRUE), -- BSHM (CTHM)
+(1009, 13, 3, TRUE), -- BS Accountancy (IoA)
+(1010, 20, 2, TRUE), -- BS Nursing (IN),
+
+-- (1011..1020)
+(1011, 4, 3, TRUE),  -- CCIS
+(1012, 5, 2, TRUE),  -- CCIS diploma
+(1013, 9, 1, TRUE),  -- BS Office Administration
+(1014, 10, 4, TRUE), -- BS Financial Management
+(1015, 6, 2, TRUE),  -- CCIS diploma
+(1016, 3, 5, TRUE),  -- CCIS (senior)
+(1017, 4, 3, TRUE),  -- CCIS
+(1018, 11, 2, TRUE), -- Associate Building & Property Mgmt
+(1019, 12, 1, TRUE), -- Associate Supply Management
+(1020, 14, 4, FALSE),-- Institute of Accountancy (UNENROLLED)
+
+-- (1021..1030)
+(1021, 3, 2, TRUE),  -- CCIS
+(1022, 7, 3, TRUE),  -- CBFS
+(1023, 8, 2, TRUE),  -- CBFS
+(1024, 1, 3, TRUE),  -- IAD
+(1025, 15, 2, TRUE), -- CHK (Exercise & Sports Science)
+(1026, 16, 3, TRUE), -- CGPP Paralegal Studies
+(1027, 17, 1, TRUE), -- CGPP Policy Management
+(1028, 18, 4, TRUE), -- CGPP Local Gov Admin
+(1029, 21, 3, TRUE), -- CTHM Hospitality
+(1030, 22, 2, TRUE), -- CTHM Tourism
+
+-- (1031..1040)
+(1031, 4, 1, TRUE),  -- CCIS
+(1032, 13, 2, TRUE), -- IoA
+(1033, 3, 4, TRUE),  -- CCIS
+(1034, 5, 1, TRUE),  -- CCIS diploma
+(1035, 9, 4, FALSE), -- BS Office Admin (UNENROLLED)
+(1036, 6, 2, TRUE),  -- CCIS diploma
+(1037, 10, 3, TRUE), -- CBFS
+(1038, 19, 1, TRUE), -- Institute of Nursing (MA Nursing - grad program but treat as enrolled)
+(1039, 2, 1, TRUE),  -- IAD associate
+(1040, 3, 2, FALSE), -- CCIS (DROPPED)  <-- dropped but still assigned to course
+
+-- (1041..1050)
+(1041, 11, 2, TRUE), -- CBFS associate
+(1042, 8, 4, TRUE),  -- CBFS
+(1043, 14, 3, TRUE), -- IoA
+(1044, 7, 1, TRUE),  -- CBFS
+(1045, 13, 5, FALSE), -- IoA (GRADUATED)
+(1046, 4, 2, TRUE),  -- CCIS
+(1047, 21, 3, TRUE), -- CTHM
+(1048, 22, 1, TRUE), -- CTHM
+(1049, 12, 1, TRUE), -- CBFS associate
+(1050, 20, 5, FALSE); -- IN (GRADUATED)
+
+COMMIT;
+
+
+
+
+
+PARA AYUSIN YUNG AUTO-INCREMENT:
+
+DELETE FROM students;
+DELETE FROM courses;
+ALTER TABLE courses AUTO_INCREMENT = 1;
+
+
+
+
+
+5. Users Table (ADMINS)
+INSERT INTO Users (email, first_name, middle_name, last_name, role)
+VALUES
+('admin1@umak.edu.ph', 'Carlos', 'M.', 'Admin', 'ADMIN');
+
+
+6. Admins Table
+-- Assume the admin’s user_id is 4
+
+
+
+7. Positions Table
+INSERT INTO Positions (position_name, position_id)
+VALUES
+('Chairperson', 1),
+('Vice Chairperson', 2),
+('Secretary', 3),
+('Treasurer', 4),
+('Auditor', 5),
+('2nd Year Representative', 6),
+('3rd Year Representative', 7),
+('4th Year Representative', 8);
+
+

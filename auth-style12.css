@@ -1,0 +1,182 @@
+
+body {
+  background: url("bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(180, 180, 180, 0.623);
+  z-index: -1;
+}
+
+.auth-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin: 80px auto;
+  max-width: 1000px;
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/*  Camera container */
+.scanner-box {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  border: 2px solid #0d6efd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Camera preview */
+#reader video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/*  Moving blue scan line */
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 300px;
+  height: 3px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 153, 255, 0) 0%,
+    rgba(0, 153, 255, 1) 50%,
+    rgba(0, 153, 255, 0) 100%
+  );
+  box-shadow: 0 0 10px rgba(0, 153, 255, 0.9), 0 0 25px rgba(0, 153, 255, 0.6);
+  border-radius: 2px;
+  z-index: 20;
+  pointer-events: none;
+  animation: moveLine 2.5s ease-in-out infinite;
+}
+
+@keyframes moveLine {
+  0% { top: 0; }
+  50% { top: calc(100% - 3px); }
+  100% { top: 0; }
+}
+
+/* Text and instructions */
+.instruction {
+  color: #0a2e5c;
+  font-weight: 600;
+}
+
+.note {
+  font-size: 18px;
+  color: #444;
+  margin-top: 10px;
+}
+
+/*  Navbar */
+.custom-navbar {
+  background-color: rgba(10, 46, 92, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+/* ---------- base styles ---------- */
+.scanner-box {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 4 / 3;
+  border: 2px solid #0d6efd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+/*  Responsive adjustments */
+
+/* For tablets and below */
+@media (max-width: 992px) {
+  .auth-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 40px auto;
+    padding: 25px;
+    gap: 25px;
+  }
+
+  .scanner-box {
+    width: 90%;
+    max-width: 390px;
+  }
+
+  .scan-line {
+    width: 70%;
+  }
+}
+/* For smaller screens */
+@media (max-width: 768px) {
+  .auth-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .scanner-box {
+    width: 90%;
+    margin: 0 auto;     /* ← this centres it */
+    max-width: 240px;
+  }
+  #reader {
+    --qrbox-size: 180px;
+  }
+
+  .scan-line {
+    left: 50%;
+    width: 70%;
+    height: 3px;
+    border-radius: 4px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 123, 255, 0) 0%,
+      rgba(0, 123, 255, 0.8) 50%,
+      rgba(0, 123, 255, 0) 100%
+    );
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+  }
+}
+
+
+.auth-section > div:last-child ul li {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #0d0d0d;
+  font-weight: 500;
+}
+
+/* 🧩 Tablet screens (slightly smaller) */
+@media (max-width: 768px) {
+  .auth-section > div:last-child ul li {
+    font-size: 20px;
+    line-height: 1.9;
+  }
+}
+
+
+
+
+

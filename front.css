@@ -1,0 +1,389 @@
+/*Color scheme naten*/
+:root{
+  --blue: #032c63;    
+  --yellow: #ffc107;  
+  --white: #ffffff;
+  --sidebar-width: 260px;
+}
+
+/* Body */
+body{ 
+  background: linear-gradient(180deg,var(--white) 0%, #f6f9ff 100%); 
+  background: url("bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(180, 180, 180, 0.623);
+  z-index: -1;
+}
+
+/* Sidebar */
+.sidebar{
+  width: var(--sidebar-width);
+  overflow: visible !important;
+  min-height: 100vh;
+  background: #022755;
+  color: var(--white);
+  padding: 1rem;
+}
+.sidebar .nav-link{ color: rgba(255,255,255,0.95); }
+.sidebar .nav-link:hover{ background: rgba(255,255,255,0.06); border-radius:8px; }
+.brand{ font-weight:700; font-size:1.05rem; letter-spacing:0.2px; }
+
+/* Sidebar link base style */
+.nav-link {
+  color: #bbb;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.nav-link:hover {
+  background-color: #2f3b52;
+  color: #fff;
+}
+
+/* Active (highlighted) link */
+.nav-link.active {
+  background-color: #1935a7; /* Highlight color */
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+
+.sidebar hr{
+  border-color: rgba(255,255,255,0.08);
+}
+
+.sidebar .logo-circle{
+  width:44px;
+  height:44px;
+  color:var(--blue); 
+  font-weight:700;
+}
+
+/* Thin divider under brand inside sidebar */
+.sidebar .sidebar-divider {
+  border: 0;
+  height: 2px;
+  background: rgb(163, 163, 163); /* subtle light line */ /* small spacing */
+  width: 100%; /* slight inset from edges */
+  align-self: flex-start;
+}
+/* Optional darker divider when sidebar uses light bg */
+@media (prefers-color-scheme: light) {
+  .sidebar .sidebar-divider { background: rgba(3,44,99,0.08); }
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  align-items: center; /* vertical center all children */
+}
+
+/* Make marquee wrapper a centered flex container (vertical center) */
+.topbar .marquee-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* remove accidental vertical spacing */
+}
+
+/* Keep marquee text inline-block and vertically centered */
+.topbar .header-marquee {
+  display: inline-block;
+  line-height: 1.2;
+  padding: 0.25rem 0;
+  vertical-align: middle;
+}
+
+/* Ensure the toggle button is centered and has no stray margins */
+#sidebarToggle,
+.topbar > .d-flex.align-items-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Give toggle a consistent height so it aligns with marquee */
+#sidebarToggle {
+  height: 40px;
+  min-width: 40px;
+  padding: 0.375rem 0.6rem;
+}
+
+/* Small-screen adjustments */
+@media (max-width: 992px) {
+  .topbar { padding-top: 0.4rem; padding-bottom: 0.4rem; }
+  .topbar .header-marquee { font-size: 1rem; }
+}
+
+/* Content frame */
+.content-frame{
+  border: 0; 
+  width: 100%; 
+  height: calc(100vh - 100px); 
+  border-radius:4px; 
+  box-shadow: 0 6px 18px rgba(13,99,214,0.08);
+}
+
+/* Content frame - expand to fill all available space */
+.content-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  display: block;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+/* Ensure main content area takes full height */
+.main-content {
+  flex: 1 1 auto;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.modal-header.bg-primary { background: #032c63 !important; }
+.btn-danger { background: #d32f2f; }
+.btn-secondary { background: #ccc; color: #032c63; }
+
+
+
+.stat-card{ 
+  border-left: 6px solid var(--yellow); 
+}
+
+.stat-card .label{
+  font-size:0.85rem;
+  opacity:0.7;
+}
+
+.stat-card .value{
+  font-weight:700;
+  font-size:1.05rem;
+}
+
+/* Admin Info */
+.admin-info .name{
+  font-size:0.85rem;
+}
+.admin-info .role{
+  font-weight:700;
+}
+
+.admin-avatar{
+  width:44px;
+  height:44px;
+}
+
+/* Loader */
+#loader{
+  display:none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px){
+  .sidebar{ 
+    position: fixed; 
+    left: -100%; 
+    z-index: 1000; 
+    transition: left .25s ease; 
+  }
+  .sidebar.show{ left: 0; }
+  .content-frame{ height: calc(100vh - 120px); }
+}
+
+
+
+.candidate-select {
+  min-width: 260px;
+}
+
+
+.sidebar-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+    /* small tuned styles to match your scheme */
+    .image-dropbox { width:185px; height:230px; border:2px dashed rgba(3,44,99,0.15); border-radius:8px; background:#fafafa; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; margin:0 auto; }
+    .image-wrap { display:flex; justify-content:center; align-items:center; } /* centers the dropbox inside its parent */
+    .image-dropbox img, .image-dropbox canvas { position:absolute; left:0; top:0; user-select:none; }
+    .image-controls { position:absolute; top:8px; right:8px; z-index:30; }
+    .remove-btn { background: rgba(0,0,0,0.65); color:#fff; border-radius:50%; width:34px; height:34px; display:flex; align-items:center; justify-content:center; border:none; }
+    .edit-overlay { position:absolute; left:0; right:0; bottom:0; padding:8px; background:rgba(255,255,255,0.92); display:flex; gap:.6rem; justify-content:flex-end; }
+    textarea.large { height:160px; overflow:auto; resize:none; }
+
+    .image-dropbox.dragover {
+  border-color: var(--blue) !important;
+  background: rgba(3,44,99,0.03);
+}
+
+
+    .btn-yellow {
+      background: #0d6efd;
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 2px 6px rgba(3,44,99,0.12);
+    }
+    
+    .btn-yellow:hover, .btn-yellow:focus {
+      background: #0d6efd;
+      color: #fff;
+   }
+ .card-body .form-label {
+     font-weight: 700;
+     color: #032c63; /* optional: keeps labels consistent with your blue theme */
+   }
+   student-info p {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: #032c63;
+}
+
+    .toast {
+  animation: slideIn 0.4s ease forwards;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.profile-section {
+      width: 100%;
+      padding: 12px 16px;
+      border-top: 1px;
+      background-color: transparent;
+      transition: all 0.25s ease;
+      color: #f70b0bff;
+      text-align: left;
+    }
+    .profile-section:hover {
+      background-color: #1935a7;
+      color: var(--blue);
+      cursor: pointer;
+     
+    }
+
+    .profile-avatar {
+      width: 42px;
+      height: 42px;
+      background-color: #695d5dff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .profile-text .name {
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    .profile-text .role {
+      font-size: 0.8rem;
+      color: white;
+      opacity: 0.9;
+    }
+
+    /* Drop-up styling */
+    .dropup .dropdown-menu {
+      background-color: rgb(231, 224, 224);
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .dropup .dropdown-item:hover {
+      background-color: rgb(255, 255, 255);
+      color: var(--blue);
+      font-weight: 600;
+    }
+    .dropup.w-100 .dropdown-menu {
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-width: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+/* optional: keep items readable */
+.dropup.w-100 .dropdown-item {
+  color: var(--blue);
+}
+
+/* Make stats text bold */
+.stat-card,
+.stat-card .label,
+.stat-card .value,
+.stat-card h5,
+.stat-card .stat-number,
+.stat-card .stat-title {
+  font-weight: 700 !important;
+  color: inherit;
+}
+
+/* Larger icons inside stat cards */
+.stat-card .fa,
+.stat-card i,
+.stat-card .icon {
+  font-size: 1.6rem !important; /* change to preferred size */
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Optional: spacing and color */
+.stat-card .icon { margin-right: 0.6rem; color: var(--blue); }
+/* ensure document and app wrapper fill viewport so flex children can stretch */
+html, body {
+  height: 100%;
+}
+.app-wrapper {
+  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* make sure main-content, card and card-body allow iframe to grow/shrink */
+.main-content, .card.h-100, .card.h-100 .card-body {
+  min-height: 0;    /* allow flex children to shrink properly */
+  flex: 1 1 auto;
+}
+
+/* ensure iframe always fills its flex container and override old calc rules */
+.content-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  display: block;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+/* override any earlier responsive calc on small screens */
+@media (max-width: 992px) {
+  .content-frame { height: 100%; }
+}
